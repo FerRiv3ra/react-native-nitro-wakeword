@@ -38,11 +38,16 @@
     "!**/.*"
   ],
   "scripts": {
-    "prepare": "bob build",
-    "nitrogen": "nitrogen",
-    "typecheck": "tsc --noEmit",
+    "build": "bob build",
+    "clean": "del-cli lib nitrogen/generated android/build android/.cxx ios/build",
     "models:download": "sh ./scripts/download-models.sh",
-    "clean": "del-cli lib nitrogen/generated android/build android/.cxx ios/build"
+    "nitrogen": "nitrogen",
+    "plugin:check": "node -e \"require('./app.plugin.js')\"",
+    "prepack": "bob build",
+    "prepare": "bob build",
+    "release": "release-it",
+    "release:beta": "release-it --preRelease=beta --npm.tag=next",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "react-native",
@@ -80,6 +85,7 @@
     "react-native-nitro-modules": ">=0.35.0 <1.0.0"
   },
   "devDependencies": {
+    "@expo/config-plugins": "~57.0.9",
     "@types/react": "~19.2.10",
     "del-cli": "7.0.0",
     "nitrogen": "^0.36.0",
@@ -87,6 +93,7 @@
     "react-native": "0.86.2",
     "react-native-builder-bob": "0.41.0",
     "react-native-nitro-modules": "^0.36.0",
+    "release-it": "^21.0.2",
     "typescript": "5.9.3"
   },
   "react-native-builder-bob": {
@@ -117,5 +124,27 @@
   "create-react-native-library": {
     "languages": "kotlin-swift",
     "type": "nitro-module"
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release v${version}",
+      "tagName": "v${version}",
+      "requireCleanWorkingDir": true
+    },
+    "npm": {
+      "publish": false
+    },
+    "github": {
+      "release": false
+    },
+    "hooks": {
+      "before:init": [
+        "yarn typecheck",
+        "yarn plugin:check"
+      ],
+      "after:bump": [
+        "yarn build"
+      ]
+    }
   }
 }
