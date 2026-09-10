@@ -1,0 +1,121 @@
+{
+  "name": "react-native-nitro-wakeword",
+  "version": "0.1.0",
+  "description": "Open-source, on-device wake word detection for React Native. openWakeWord ONNX pipeline + ONNX Runtime, powered by Nitro Modules. MIT, no license keys.",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "models",
+    "nitrogen",
+    "nitro.json",
+    "*.podspec",
+    "app.plugin.js",
+    "plugin",
+    "scripts",
+    "NOTICE",
+    "!ios/build",
+    "!android/build",
+    "!android/.cxx",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "prepare": "bob build",
+    "nitrogen": "nitrogen",
+    "typecheck": "tsc --noEmit",
+    "models:download": "sh ./scripts/download-models.sh",
+    "clean": "del-cli lib nitrogen/generated android/build android/.cxx ios/build"
+  },
+  "keywords": [
+    "react-native",
+    "wake-word",
+    "wakeword",
+    "hotword",
+    "keyword-spotting",
+    "openwakeword",
+    "onnx",
+    "onnxruntime",
+    "nitro",
+    "nitro-modules",
+    "speech",
+    "voice",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FerRiv3ra/react-native-nitro-wakeword.git"
+  },
+  "author": "FerRivera <fernando@softvize-premier.com> (https://feriv3ra.netlify.app)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FerRiv3ra/react-native-nitro-wakeword/issues"
+  },
+  "homepage": "https://github.com/FerRiv3ra/react-native-nitro-wakeword#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-nitro-modules": ">=0.35.0 <1.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "~19.2.10",
+    "del-cli": "7.0.0",
+    "nitrogen": "^0.36.0",
+    "react": "19.2.3",
+    "react-native": "0.86.2",
+    "react-native-builder-bob": "0.41.0",
+    "react-native-nitro-modules": "^0.36.0",
+    "typescript": "5.9.3"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "custom",
+        {
+          "script": "nitrogen",
+          "clean": "nitrogen/"
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "create-react-native-library": {
+    "languages": "kotlin-swift",
+    "type": "nitro-module"
+  }
+}

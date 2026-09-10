@@ -1,0 +1,17 @@
+{
+  "cxxNamespace": ["wakeword"],
+  "ios": {
+    "iosModuleName": "NitroWakeWord"
+  },
+  "android": {
+    "androidNamespace": ["wakeword"],
+    "androidCxxLibName": "nitrowakeword"
+  },
+  "autolinking": {
+    "WakeWord": {
+      "ios": { "language": "swift", "implementationClassName": "HybridWakeWord" },
+      "android": { "language": "kotlin", "implementationClassName": "HybridWakeWord" }
+    }
+  },
+  "ignorePaths": ["node_modules", "lib"]
+}

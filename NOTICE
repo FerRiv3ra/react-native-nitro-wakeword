@@ -1,0 +1,29 @@
+react-native-nitro-wakeword
+Copyright (c) 2026 FerRivera
+Licensed under the MIT License (see LICENSE).
+
+This package bundles and depends on third-party work:
+
+1. openWakeWord (https://github.com/dscripka/openWakeWord)
+   Copyright (c) David Scripka. Licensed under the Apache License, Version 2.0.
+   Bundled files (unmodified, from release v0.5.1):
+     models/melspectrogram.onnx
+     models/embedding_model.onnx
+     models/hey_jarvis_v0.1.onnx
+   The audio feature pipeline implemented in this package (melspectrogram ->
+   speech embedding -> keyword classifier, 80 ms / 1280-sample chunks,
+   76x32 mel window, 96-dim embeddings) follows the openWakeWord design.
+   The embedding model originates from Google's "speech_embedding" TF Hub
+   model (Apache License 2.0).
+
+2. Silero VAD (https://github.com/snakers4/silero-vad)
+   Copyright (c) Silero Team. Licensed under the MIT License.
+   Bundled file: models/silero_vad.onnx
+
+3. ONNX Runtime (https://github.com/microsoft/onnxruntime)
+   Copyright (c) Microsoft Corporation. Licensed under the MIT License.
+   Consumed as a dependency: CocoaPod "onnxruntime-c" and Maven artifact
+   "com.microsoft.onnxruntime:onnxruntime-android".
+
+4. Nitro Modules (https://github.com/mrousavy/nitro)
+   Copyright (c) Marc Rousavy. Licensed under the MIT License.
