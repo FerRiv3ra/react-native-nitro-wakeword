@@ -1,0 +1,2 @@
+-keep class com.margelo.nitro.wakeword.** { *; }
+-keep class ai.onnxruntime.** { *; }
