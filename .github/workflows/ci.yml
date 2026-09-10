@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   verify:
-    name: Typecheck & build
+    name: Lint, test & build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,8 +20,14 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
 
+      - name: Lint
+        run: yarn lint
+
       - name: Typecheck
         run: yarn typecheck
+
+      - name: Unit tests
+        run: yarn test --ci
 
       - name: Build (runs nitrogen)
         run: yarn build

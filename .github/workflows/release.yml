@@ -32,6 +32,8 @@ jobs:
       - name: Verify
         run: |
           yarn typecheck
+          yarn lint
+          yarn test --ci
           yarn plugin:check
       - name: Build
         run: yarn build
