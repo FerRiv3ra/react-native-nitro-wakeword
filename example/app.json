@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "NitroWakeWordExample",
+    "slug": "nitro-wakeword-example",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "bundleIdentifier": "com.ferrivera.nitrowakeword.example",
+      "supportsTablet": false
+    },
+    "android": {
+      "package": "com.ferrivera.nitrowakeword.example"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "newArchEnabled": true,
+    "plugins": [
+      [
+        "react-native-nitro-wakeword",
+        {
+          "microphonePermission": "Allow $(PRODUCT_NAME) to listen for the wake word.",
+          "iosBackgroundAudio": true,
+          "androidForegroundService": true
+        }
+      ]
+    ]
+  }
+}
