@@ -6,6 +6,12 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Changed
+
+- Tooling: ESLint + Prettier (shared React Native config), Jest unit tests for
+  the JS engine facade and `useWakeWord`, husky pre-commit with lint-staged,
+  and CI/release workflows that run lint and tests.
+
 ## [0.1.0] - 2026-09-10
 
 ### Added

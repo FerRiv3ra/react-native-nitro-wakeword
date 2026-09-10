@@ -40,13 +40,17 @@
   "scripts": {
     "build": "bob build",
     "clean": "del-cli lib nitrogen/generated android/build android/.cxx ios/build",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint:fix": "eslint \"**/*.{js,ts,tsx}\" --fix",
     "models:download": "sh ./scripts/download-models.sh",
     "nitrogen": "nitrogen",
     "plugin:check": "node -e \"require('./app.plugin.js')\"",
     "prepack": "bob build",
-    "prepare": "bob build",
+    "prepare": "bob build && husky",
     "release": "release-it",
     "release:beta": "release-it --preRelease=beta --npm.tag=next",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "typecheck": "tsc --noEmit"
   },
   "keywords": [
@@ -85,15 +89,32 @@
     "react-native-nitro-modules": ">=0.35.0 <1.0.0"
   },
   "devDependencies": {
+    "@eslint/compat": "^2.1.1",
+    "@eslint/eslintrc": "^3.3.7",
+    "@eslint/js": "^9.39.0",
     "@expo/config-plugins": "~57.0.9",
+    "@react-native/babel-preset": "0.86.3",
+    "@react-native/eslint-config": "0.86.3",
+    "@react-native/jest-preset": "0.86.3",
+    "@testing-library/react-native": "^14.0.1",
+    "@types/jest": "^29.5.14",
     "@types/react": "~19.2.10",
     "del-cli": "7.0.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-ft-flow": "^3.0.11",
+    "eslint-plugin-prettier": "^5.5.6",
+    "husky": "^9.1.7",
+    "jest": "^29.7.0",
+    "lint-staged": "^16.1.6",
     "nitrogen": "^0.36.0",
+    "prettier": "^3.8.3",
     "react": "19.2.3",
     "react-native": "0.86.2",
     "react-native-builder-bob": "0.41.0",
     "react-native-nitro-modules": "^0.36.0",
     "release-it": "^21.0.2",
+    "test-renderer": "^1.2.0",
     "typescript": "5.9.3"
   },
   "react-native-builder-bob": {
@@ -140,11 +161,42 @@
     "hooks": {
       "before:init": [
         "yarn typecheck",
+        "yarn lint",
+        "yarn test",
         "yarn plugin:check"
       ],
       "after:bump": [
         "yarn build"
       ]
     }
+  },
+  "jest": {
+    "preset": "@react-native/jest-preset",
+    "testMatch": [
+      "**/__tests__/**/*.test.[jt]s?(x)"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ]
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "bracketSameLine": true,
+    "bracketSpacing": false,
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "lint-staged": {
+    "*.{json,md}": [
+      "prettier --write"
+    ],
+    "*.{js,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }

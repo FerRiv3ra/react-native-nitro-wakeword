@@ -1,11 +1,10 @@
-import { NitroModules } from 'react-native-nitro-modules';
+import {NitroModules} from 'react-native-nitro-modules';
 import type {
   WakeWord,
   WakeWordConfig,
   WakeWordDetection,
   WakeWordModel,
 } from './WakeWord.nitro';
-
 
 /** Names of the classifiers shipped with this library (resolved without any path). */
 export const BUILTIN_MODELS = {
@@ -37,22 +36,22 @@ const errorListeners = new Set<ErrorListener>();
 function syncNativeListeners(): void {
   const native = getNativeWakeWord();
   if (detectionListeners.size > 0) {
-    native.setDetectionListener((detection) => {
-      detectionListeners.forEach((listener) => listener(detection));
+    native.setDetectionListener(detection => {
+      detectionListeners.forEach(listener => listener(detection));
     });
   } else {
     native.clearDetectionListener();
   }
   if (scoreListeners.size > 0) {
     native.setScoreListener((keyword, score) => {
-      scoreListeners.forEach((listener) => listener(keyword, score));
+      scoreListeners.forEach(listener => listener(keyword, score));
     });
   } else {
     native.clearScoreListener();
   }
   if (errorListeners.size > 0) {
-    native.setErrorListener((message) => {
-      errorListeners.forEach((listener) => listener(message));
+    native.setErrorListener(message => {
+      errorListeners.forEach(listener => listener(message));
     });
   } else {
     native.clearErrorListener();
@@ -124,5 +123,5 @@ export function defineModel(
   model: string,
   options: Omit<WakeWordModel, 'model'> = {},
 ): WakeWordModel {
-  return { model, threshold: 0.5, patience: 1, ...options };
+  return {model, threshold: 0.5, patience: 1, ...options};
 }

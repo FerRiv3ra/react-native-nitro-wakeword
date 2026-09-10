@@ -18,10 +18,10 @@ that produce the pronunciation you want and mix them:
 
 ```yaml
 target_phrase:
-  - "hey nova"
-  - "ey nova"
-  - "oye nova"
-model_name: "hey_nova"
+  - 'hey nova'
+  - 'ey nova'
+  - 'oye nova'
+model_name: 'hey_nova'
 ```
 
 Listen to a few generated clips (`output_dir/positive_train/*.wav`) and drop
@@ -40,10 +40,10 @@ Download the `.onnx` + `.onnx.json` for each voice from
 
 Recommended counts for a production model:
 
-| Set | Samples |
-|---|---|
-| positive train | 30 000+ |
-| positive test | 2 000 |
+| Set                                         | Samples |
+| ------------------------------------------- | ------- |
+| positive train                              | 30 000+ |
+| positive test                               | 2 000   |
 | negative (adversarial phrases, same voices) | 30 000+ |
 
 Add adversarial negatives: phrases that sound similar ("hey novia", "innova",
@@ -84,7 +84,9 @@ python -c "import onnxruntime as o; s=o.InferenceSession('hey_nova.onnx'); print
 
 ```ts
 await WakeWordEngine.load({
-  models: [{ model: 'hey_nova.onnx', keyword: 'hey_nova', threshold: 0.7, patience: 2 }],
+  models: [
+    {model: 'hey_nova.onnx', keyword: 'hey_nova', threshold: 0.7, patience: 2},
+  ],
 });
 ```
 

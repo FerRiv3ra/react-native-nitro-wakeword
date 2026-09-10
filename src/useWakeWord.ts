@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { WakeWordEngine } from './engine';
-import type { WakeWordConfig, WakeWordDetection } from './WakeWord.nitro';
+import {useCallback, useEffect, useRef, useState} from 'react';
+import {WakeWordEngine} from './engine';
+import type {WakeWordConfig, WakeWordDetection} from './WakeWord.nitro';
 
 export interface UseWakeWordOptions {
   /** Engine config. Re-loads the engine when its identity changes (memoize it!). */
@@ -83,7 +83,7 @@ export function useWakeWord({
     mounted.current = true;
     let cancelled = false;
 
-    const offDetection = WakeWordEngine.addDetectionListener((detection) => {
+    const offDetection = WakeWordEngine.addDetectionListener(detection => {
       setLastDetection(detection);
       onDetectedRef.current?.(detection);
       if (pauseAfterDetectionMs > 0) {
@@ -99,7 +99,7 @@ export function useWakeWord({
         }, pauseAfterDetectionMs);
       }
     });
-    const offError = WakeWordEngine.addErrorListener((message) => {
+    const offError = WakeWordEngine.addErrorListener(message => {
       setError(message);
       setIsListening(WakeWordEngine.isListening);
       onErrorRef.current?.(message);

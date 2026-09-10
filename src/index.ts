@@ -10,5 +10,5 @@ export {
   defineModel,
   getNativeWakeWord,
 } from './engine';
-export { useWakeWord } from './useWakeWord';
-export type { UseWakeWordOptions, UseWakeWordResult } from './useWakeWord';
+export {useWakeWord} from './useWakeWord';
+export type {UseWakeWordOptions, UseWakeWordResult} from './useWakeWord';

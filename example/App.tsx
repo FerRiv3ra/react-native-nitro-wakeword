@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import {useMemo, useState} from 'react';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {
   BUILTIN_MODELS,
   WakeWordEngine,
@@ -13,9 +13,19 @@ export default function App() {
   const config = useMemo<WakeWordConfig>(
     () => ({
       models: [
-        { model: BUILTIN_MODELS.heyJarvis, keyword: 'hey_jarvis', threshold: 0.6, patience: 2 },
+        {
+          model: BUILTIN_MODELS.heyJarvis,
+          keyword: 'hey_jarvis',
+          threshold: 0.6,
+          patience: 2,
+        },
         // Copied from example/assets/wakeword/ by the config plugin.
-        { model: 'alexa_v0.1.onnx', keyword: 'alexa', threshold: 0.6, patience: 2 },
+        {
+          model: 'alexa_v0.1.onnx',
+          keyword: 'alexa',
+          threshold: 0.6,
+          patience: 2,
+        },
       ],
       vadThreshold: 0.3,
       refractoryMs: 1500,
@@ -25,10 +35,11 @@ export default function App() {
     }),
     [],
   );
-  const { isLoaded, isListening, lastDetection, error, start, stop } = useWakeWord({
-    config,
-    onDetected: () => setCount((c) => c + 1),
-  });
+  const {isLoaded, isListening, lastDetection, error, start, stop} =
+    useWakeWord({
+      config,
+      onDetected: () => setCount(c => c + 1),
+    });
 
   return (
     <View style={styles.container}>
@@ -36,11 +47,16 @@ export default function App() {
       <Text>loaded: {String(isLoaded)}</Text>
       <Text>listening: {String(isListening)}</Text>
       <Text>detections: {count}</Text>
-      <Text>last: {lastDetection ? `${lastDetection.keyword} (${lastDetection.score.toFixed(2)})` : '-'}</Text>
+      <Text>
+        last:{' '}
+        {lastDetection
+          ? `${lastDetection.keyword} (${lastDetection.score.toFixed(2)})`
+          : '-'}
+      </Text>
       <Text>score: {score.toFixed(2)}</Text>
       {error ? <Text style={styles.error}>{error}</Text> : null}
       <View style={styles.row}>
-        <Pressable style={styles.button} onPress={() => void start()}>
+        <Pressable style={styles.button} onPress={start}>
           <Text>Start</Text>
         </Pressable>
         <Pressable style={styles.button} onPress={stop}>
@@ -48,8 +64,9 @@ export default function App() {
         </Pressable>
         <Pressable
           style={styles.button}
-          onPress={() => WakeWordEngine.addScoreListener((_, s) => setScore(s))}
-        >
+          onPress={() =>
+            WakeWordEngine.addScoreListener((_, s) => setScore(s))
+          }>
           <Text>Scores</Text>
         </Pressable>
       </View>
@@ -58,9 +75,14 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 8 },
-  title: { fontSize: 22, fontWeight: '600', marginBottom: 12 },
-  error: { color: 'red' },
-  row: { flexDirection: 'row', gap: 12, marginTop: 16 },
-  button: { paddingHorizontal: 16, paddingVertical: 10, backgroundColor: '#ddd', borderRadius: 8 },
+  container: {flex: 1, alignItems: 'center', justifyContent: 'center', gap: 8},
+  title: {fontSize: 22, fontWeight: '600', marginBottom: 12},
+  error: {color: 'red'},
+  row: {flexDirection: 'row', gap: 12, marginTop: 16},
+  button: {
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    backgroundColor: '#ddd',
+    borderRadius: 8,
+  },
 });

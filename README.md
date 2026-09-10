@@ -42,12 +42,12 @@ CLI** (autolinking). The native code is the same; only the setup differs.
 }
 ```
 
-| Option | Default | Effect |
-|---|---|---|
-| `microphonePermission` | generic text | `NSMicrophoneUsageDescription` |
-| `iosBackgroundAudio` | `false` | adds the `audio` `UIBackgroundModes` entry |
-| `androidForegroundService` | `false` | adds `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_MICROPHONE`, `POST_NOTIFICATIONS` |
-| `modelsDir` | `assets/wakeword` | every `*.onnx` in this folder is copied into both native projects on `expo prebuild` |
+| Option                     | Default           | Effect                                                                               |
+| -------------------------- | ----------------- | ------------------------------------------------------------------------------------ |
+| `microphonePermission`     | generic text      | `NSMicrophoneUsageDescription`                                                       |
+| `iosBackgroundAudio`       | `false`           | adds the `audio` `UIBackgroundModes` entry                                           |
+| `androidForegroundService` | `false`           | adds `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_MICROPHONE`, `POST_NOTIFICATIONS`     |
+| `modelsDir`                | `assets/wakeword` | every `*.onnx` in this folder is copied into both native projects on `expo prebuild` |
 
 Drop your own classifiers in `assets/wakeword/` (or the folder you configured),
 run `npx expo prebuild`, and reference them by file name. Nothing else to do.
@@ -59,7 +59,7 @@ Then:
 
 - **iOS**: add `NSMicrophoneUsageDescription` to `Info.plist`. For background
   detection add `audio` to `UIBackgroundModes`. Add your own `.onnx` files to
-  the app target (Xcode: *Build Phases → Copy Bundle Resources*).
+  the app target (Xcode: _Build Phases → Copy Bundle Resources_).
 - **Android**: `RECORD_AUDIO`, `FOREGROUND_SERVICE` and
   `FOREGROUND_SERVICE_MICROPHONE` are merged from the library manifest. For the
   foreground-service notification on Android 13+ add
@@ -80,13 +80,18 @@ import {
 // Imperative API
 await WakeWordEngine.load({
   models: [
-    { model: BUILTIN_MODELS.heyJarvis, keyword: 'hey_jarvis', threshold: 0.6, patience: 2 },
-    { model: 'hey_nova.onnx', keyword: 'hey_nova', threshold: 0.7 }, // your own model
+    {
+      model: BUILTIN_MODELS.heyJarvis,
+      keyword: 'hey_jarvis',
+      threshold: 0.6,
+      patience: 2,
+    },
+    {model: 'hey_nova.onnx', keyword: 'hey_nova', threshold: 0.7}, // your own model
   ],
   vadThreshold: 0.3,
   refractoryMs: 1500,
 });
-const unsubscribe = WakeWordEngine.addDetectionListener(({ keyword, score }) => {
+const unsubscribe = WakeWordEngine.addDetectionListener(({keyword, score}) => {
   console.log('detected', keyword, score);
 });
 if (!WakeWordEngine.hasMicrophonePermission()) {
@@ -101,13 +106,13 @@ unsubscribe();
 ```tsx
 // Hook
 const config = useMemo(
-  () => ({ models: [{ model: BUILTIN_MODELS.heyJarvis, threshold: 0.6 }] }),
+  () => ({models: [{model: BUILTIN_MODELS.heyJarvis, threshold: 0.6}]}),
   [],
 );
-const { isListening, lastDetection, error } = useWakeWord({
+const {isListening, lastDetection, error} = useWakeWord({
   config,
   pauseAfterDetectionMs: 5000,
-  onDetected: ({ keyword }) => openAssistant(keyword),
+  onDetected: ({keyword}) => openAssistant(keyword),
 });
 ```
 
@@ -115,11 +120,11 @@ const { isListening, lastDetection, error } = useWakeWord({
 
 `model` accepts:
 
-| Value | Resolved from |
-|---|---|
-| `hey_jarvis_v0.1.onnx` | app bundle / Android assets first, then the models shipped in this package |
-| `hey_nova.onnx` | Expo: put it in `modelsDir` and prebuild. Bare: Xcode *Copy Bundle Resources* + `android/app/src/main/assets/` |
-| `/absolute/path.onnx` or `file://…` | anything downloaded at runtime, `expo-asset` `localUri`, etc. |
+| Value                               | Resolved from                                                                                                  |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `hey_jarvis_v0.1.onnx`              | app bundle / Android assets first, then the models shipped in this package                                     |
+| `hey_nova.onnx`                     | Expo: put it in `modelsDir` and prebuild. Bare: Xcode _Copy Bundle Resources_ + `android/app/src/main/assets/` |
+| `/absolute/path.onnx` or `file://…` | anything downloaded at runtime, `expo-asset` `localUri`, etc.                                                  |
 
 The classifier must be an openWakeWord-format model: input `[1, N, 96]` float32,
 output `[1, 1]` probability. `N` (usually 16) is detected automatically.
@@ -144,16 +149,16 @@ output `[1, 1]` probability. `N` (usually 16) is detected automatically.
 
 See [src/WakeWord.nitro.ts](src/WakeWord.nitro.ts) for the full typed contract.
 
-| Method | |
-|---|---|
-| `load(config)` | loads base models + classifiers, warms up the pipeline |
-| `start()` / `stop()` | open / close the microphone |
-| `unload()` | releases every ONNX session |
-| `setThreshold(keyword, value)` | live threshold change |
-| `addDetectionListener(cb)` | returns unsubscribe |
-| `addScoreListener(cb)` | raw per-frame scores (tuning only) |
-| `addErrorListener(cb)` | runtime errors |
-| `hasMicrophonePermission()` / `requestMicrophonePermission()` | |
+| Method                                                        |                                                        |
+| ------------------------------------------------------------- | ------------------------------------------------------ |
+| `load(config)`                                                | loads base models + classifiers, warms up the pipeline |
+| `start()` / `stop()`                                          | open / close the microphone                            |
+| `unload()`                                                    | releases every ONNX session                            |
+| `setThreshold(keyword, value)`                                | live threshold change                                  |
+| `addDetectionListener(cb)`                                    | returns unsubscribe                                    |
+| `addScoreListener(cb)`                                        | raw per-frame scores (tuning only)                     |
+| `addErrorListener(cb)`                                        | runtime errors                                         |
+| `hasMicrophonePermission()` / `requestMicrophonePermission()` |                                                        |
 
 ## How it works
 

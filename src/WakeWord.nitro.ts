@@ -1,4 +1,4 @@
-import type { HybridObject } from 'react-native-nitro-modules';
+import type {HybridObject} from 'react-native-nitro-modules';
 
 /**
  * One keyword classifier to run on top of the shared openWakeWord
@@ -67,8 +67,10 @@ export interface WakeWordDetection {
   timestamp: number;
 }
 
-export interface WakeWord
-  extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
+export interface WakeWord extends HybridObject<{
+  ios: 'swift';
+  android: 'kotlin';
+}> {
   /** `true` after `load()` succeeded and until `unload()`. */
   readonly isLoaded: boolean;
   /** `true` while the microphone is open and audio is being processed. */

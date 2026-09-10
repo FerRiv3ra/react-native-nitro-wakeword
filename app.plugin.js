@@ -38,13 +38,16 @@ function listModels(projectRoot, modelsDir) {
   if (!fs.existsSync(dir)) return [];
   return fs
     .readdirSync(dir)
-    .filter((file) => file.toLowerCase().endsWith('.onnx'))
+    .filter(file => file.toLowerCase().endsWith('.onnx'))
     .sort()
-    .map((file) => ({ file, source: path.join(dir, file) }));
+    .map(file => ({file, source: path.join(dir, file)}));
 }
 
-function withIosPermissions(config, { microphonePermission, iosBackgroundAudio }) {
-  return withInfoPlist(config, (mod) => {
+function withIosPermissions(
+  config,
+  {microphonePermission, iosBackgroundAudio},
+) {
+  return withInfoPlist(config, mod => {
     mod.modResults.NSMicrophoneUsageDescription =
       microphonePermission ||
       mod.modResults.NSMicrophoneUsageDescription ||
@@ -58,8 +61,8 @@ function withIosPermissions(config, { microphonePermission, iosBackgroundAudio }
   });
 }
 
-function withAndroidPermissions(config, { androidForegroundService }) {
-  return withAndroidManifest(config, (mod) => {
+function withAndroidPermissions(config, {androidForegroundService}) {
+  return withAndroidManifest(config, mod => {
     const permissions = ['android.permission.RECORD_AUDIO'];
     if (androidForegroundService) {
       permissions.push(
@@ -76,7 +79,7 @@ function withAndroidPermissions(config, { androidForegroundService }) {
 function withAndroidModels(config, modelsDir) {
   return withDangerousMod(config, [
     'android',
-    (mod) => {
+    mod => {
       const models = listModels(mod.modRequest.projectRoot, modelsDir);
       if (models.length === 0) return mod;
       const destDir = path.join(
@@ -86,8 +89,8 @@ function withAndroidModels(config, modelsDir) {
         'main',
         'assets',
       );
-      fs.mkdirSync(destDir, { recursive: true });
-      for (const { file, source } of models) {
+      fs.mkdirSync(destDir, {recursive: true});
+      for (const {file, source} of models) {
         fs.copyFileSync(source, path.join(destDir, file));
       }
       return mod;
@@ -98,23 +101,25 @@ function withAndroidModels(config, modelsDir) {
 function withIosModels(config, modelsDir) {
   config = withDangerousMod(config, [
     'ios',
-    (mod) => {
+    mod => {
       const models = listModels(mod.modRequest.projectRoot, modelsDir);
       if (models.length === 0) return mod;
       const destDir = path.join(mod.modRequest.platformProjectRoot, IOS_GROUP);
-      fs.mkdirSync(destDir, { recursive: true });
-      for (const { file, source } of models) {
+      fs.mkdirSync(destDir, {recursive: true});
+      for (const {file, source} of models) {
         fs.copyFileSync(source, path.join(destDir, file));
       }
       return mod;
     },
   ]);
 
-  return withXcodeProject(config, (mod) => {
+  return withXcodeProject(config, mod => {
     const models = listModels(mod.modRequest.projectRoot, modelsDir);
-    for (const { file } of models) {
+    for (const {file} of models) {
       const filepath = path.join(IOS_GROUP, file);
-      if (!fs.existsSync(path.join(mod.modRequest.platformProjectRoot, filepath))) {
+      if (
+        !fs.existsSync(path.join(mod.modRequest.platformProjectRoot, filepath))
+      ) {
         continue;
       }
       IOSConfig.XcodeUtils.addResourceFileToGroup({
