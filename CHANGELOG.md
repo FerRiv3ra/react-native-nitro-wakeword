@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-09-11
+
 ### Fixed
 
 - A detection fired again right after every `stop()` → `start()` cycle: the
