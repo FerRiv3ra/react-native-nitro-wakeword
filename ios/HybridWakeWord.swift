@@ -71,13 +71,15 @@ class HybridWakeWord: HybridWakeWordSpec {
 
   public func start() throws -> Promise<Void> {
     return Promise.async { [self] in
-      guard self.engine != nil else {
+      guard let engine = self.engine else {
         throw WakeWordError("Call load() before start()")
       }
       guard try self.hasMicrophonePermission() else {
         throw WakeWordError("Microphone permission not granted")
       }
       if self.capture?.isRunning == true { return }
+      // Drop whatever audio triggered the previous detection.
+      try self.queue.sync { try engine.reset() }
 
       let capture = AudioCapture(
         chunkSize: OpenWakeWordEngine.chunkSize,

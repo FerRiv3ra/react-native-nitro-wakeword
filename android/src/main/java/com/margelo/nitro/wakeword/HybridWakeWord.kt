@@ -83,10 +83,12 @@ class HybridWakeWord : HybridWakeWordSpec() {
   }
 
   override fun start(): Promise<Unit> = Promise.async {
-    if (engine == null) throw WakeWordException("Call load() before start()")
+    val loaded = engine ?: throw WakeWordException("Call load() before start()")
     if (!hasMicrophonePermission()) throw WakeWordException("Microphone permission not granted")
     synchronized(lock) {
       if (capture?.isRunning == true) return@async
+      // Drop whatever audio triggered the previous detection.
+      loaded.reset()
       val newCapture = AudioCapture(
         chunkSize = OpenWakeWordEngine.CHUNK_SIZE,
         onChunk = { chunk -> processChunk(chunk) },

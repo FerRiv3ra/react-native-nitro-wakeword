@@ -126,6 +126,22 @@ final class OpenWakeWordEngine {
     vadScores = [Float](repeating: 0, count: OpenWakeWordEngine.vadHistory)
   }
 
+  /// Flushes every buffer back to "silence". Call before (re)starting capture:
+  /// the mel/embedding windows still hold the audio that triggered the last
+  /// detection, and would fire again on the first chunk after a stop/start.
+  func reset() throws {
+    raw = [Float](repeating: 0, count: raw.count)
+    mel = [Float](repeating: 1, count: mel.count)
+    melFramesSeen = 0
+    features = [Float](repeating: 0, count: features.count)
+    featuresSeen = 0
+    vadH = [Float](repeating: 0, count: 2 * 64)
+    vadC = [Float](repeating: 0, count: 2 * 64)
+    vadPending.removeAll()
+    vadIndex = 0
+    try warmUp()
+  }
+
   func setThreshold(keyword: String, threshold: Float) {
     keywords.first { $0.keyword == keyword }?.threshold = threshold
   }

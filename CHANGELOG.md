@@ -6,6 +6,13 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Fixed
+
+- A detection fired again right after every `stop()` → `start()` cycle: the
+  mel and embedding windows still held the audio of the previous wake word, so
+  the first chunk after restarting re-classified it. `start()` now flushes the
+  pipeline back to silence before capturing (both platforms).
+
 ## [0.2.1] - 2026-09-11
 
 ### Fixed

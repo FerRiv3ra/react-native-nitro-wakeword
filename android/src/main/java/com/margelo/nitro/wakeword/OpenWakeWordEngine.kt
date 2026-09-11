@@ -97,6 +97,24 @@ class OpenWakeWordEngine(
     vadScores.fill(0f)
   }
 
+  /**
+   * Flushes every buffer back to "silence". Call before (re)starting capture:
+   * the mel/embedding windows still hold the audio that triggered the last
+   * detection, and would fire again on the first chunk after a stop/start.
+   */
+  fun reset() {
+    raw.fill(0f)
+    mel.fill(1f)
+    melFramesSeen = 0
+    features.fill(0f)
+    featuresSeen = 0
+    vadH = FloatArray(2 * 64)
+    vadC = FloatArray(2 * 64)
+    vadPendingCount = 0
+    vadIndex = 0
+    warmUp()
+  }
+
   fun setThreshold(keyword: String, threshold: Float) {
     keywords.firstOrNull { it.keyword == keyword }?.threshold = threshold
   }
