@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-09-11
+
 ### Fixed
 
 - iOS: connecting or disconnecting Bluetooth audio could crash the app or
