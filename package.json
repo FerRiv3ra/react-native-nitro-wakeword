@@ -1,6 +1,6 @@
 {
   "name": "react-native-nitro-wakeword",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Open-source, on-device wake word detection for React Native. openWakeWord ONNX pipeline + ONNX Runtime, powered by Nitro Modules. MIT, no license keys.",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
