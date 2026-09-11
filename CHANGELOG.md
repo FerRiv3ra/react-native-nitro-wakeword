@@ -6,6 +6,17 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Fixed
+
+- iOS: connecting or disconnecting Bluetooth audio could crash the app or
+  silently stop detection. The audio engine restarted on every route change,
+  including the `categoryChange` its own restart produced, which looped
+  forever and could hand AVAudioEngine a stale hardware format. The session
+  category is now set once, route changes are debounced with a cooldown,
+  the input tap uses the node's live format and the converter follows the
+  incoming buffer format. Verified on an iPhone XR (iOS 18) with Bluetooth
+  earbuds connected and disconnected while listening.
+
 ## [0.2.0] - 2026-09-10
 
 ### Changed
