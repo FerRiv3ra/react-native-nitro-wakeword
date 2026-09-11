@@ -38,7 +38,11 @@ export default function App() {
   const {isLoaded, isListening, lastDetection, error, start, stop} =
     useWakeWord({
       config,
-      onDetected: () => setCount(c => c + 1),
+      onDetected: d => {
+        console.log('[wakeword] detected', d.keyword, d.score.toFixed(2));
+        setCount(c => c + 1);
+      },
+      onError: e => console.log('[wakeword] error', e),
     });
 
   return (
