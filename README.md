@@ -1,5 +1,10 @@
 # react-native-nitro-wakeword
 
+[![npm](https://img.shields.io/npm/v/react-native-nitro-wakeword.svg)](https://www.npmjs.com/package/react-native-nitro-wakeword)
+[![license](https://img.shields.io/npm/l/react-native-nitro-wakeword.svg)](LICENSE)
+[![CI](https://github.com/FerRiv3ra/react-native-nitro-wakeword/actions/workflows/ci.yml/badge.svg)](https://github.com/FerRiv3ra/react-native-nitro-wakeword/actions/workflows/ci.yml)
+[![sponsor](https://img.shields.io/badge/sponsor-%E2%9D%A4-ff69b4?logo=githubsponsors)](https://github.com/sponsors/FerRiv3ra)
+
 Open-source, on-device **wake word detection** for React Native. No license keys, no
 cloud, no vendor lock-in.
 
@@ -193,6 +198,12 @@ shipping your own model.
 
 - React Native ≥ 0.76 (new architecture), `react-native-nitro-modules` ≥ 0.35
 - iOS 15.1+, Android API 24+
+
+## Support
+
+If this package saves you a license fee, consider
+[sponsoring its maintenance](https://github.com/sponsors/FerRiv3ra). Issues and
+PRs are welcome either way.
 
 ## License
 

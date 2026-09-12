@@ -79,6 +79,10 @@
     "url": "https://github.com/FerRiv3ra/react-native-nitro-wakeword/issues"
   },
   "homepage": "https://github.com/FerRiv3ra/react-native-nitro-wakeword#readme",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/FerRiv3ra"
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
