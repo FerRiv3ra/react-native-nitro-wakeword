@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+## [0.2.3] - 2026-11-03
+
 ### Fixed
 
 - Expo warned that the config plugin was loaded from `app.plugin.js` but the
