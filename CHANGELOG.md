@@ -6,6 +6,13 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Fixed
+
+- Expo warned that the config plugin was loaded from `app.plugin.js` but the
+  `exports` field did not include `./app.plugin.js`, so Node-based tools could
+  not resolve `react-native-nitro-wakeword/app.plugin.js`. The subpath is now
+  exported.
+
 ## [0.2.2] - 2026-09-11
 
 ### Fixed
